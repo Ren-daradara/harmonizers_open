@@ -1,39 +1,37 @@
-# Translating Melody to Chord: Structured and Flexible Harmonization of Melody with Transformer
-* Paper: https://ieeexplore.ieee.org/document/9723052
-* Demo: https://free-pig-6c6.notion.site/Translating-Melody-to-Chord-Structured-and-Flexible-Harmonization-of-Melody-with-Transformer-d03b868e0a964ac280a97795304248e9
+# 時系列感性パラメータを用いたハーモナイゼーションシステム
 
 
-## PARSE DATA
+## データダウンロード
 
-1) CMD: 
-- download raw data at: https://github.com/shiehn/chord-melody-dataset
-- save raw data as: ./CMD/dataset/abc...
-- run command: python3 process_data.py --dataset CMD 
-
-2) HLSD 
+HLSD 
 - download raw data at: https://github.com/wayne391/lead-sheet-dataset
 - save raw data as: ./HLSD/dataset/event/a/a_day_...
 - run command: python3 process_data.py --dataset HLSD 
 
 outputs:
-1) saves npy files for the parsed features (saved directory ex: ./CMD/output/~) 
-2) saves train/val/test batches (saved directory ex: ./CMD/exp/train/batch/~)
-3) saves h5py dataset for the train/val/test batches (saved filename ex: ./CMD_train.h5)
+1) saves npy files for the parsed features (saved directory ex: ./HLSD/output/~) 
+2) saves train/val/test batches (saved directory ex: ./HLSD/exp/train/batch/~)
+3) saves h5py dataset for the train/val/test batches (saved filename ex: ./HLSD_train.h5)
 
 
 ## TRAIN MODEL
-
-1) STHarm 
-python3 trainer.py [dataset] STHarm
-2) VTHarm 
-python3 trainer.py [dataset] VTHarm
-3) rVTHarm  
-python3 trainer.py [dataset] rVTHarm 
-
-* [dataset] -> CMD or HLSD
+  
+1)python3 trainer.py HLSD rVTHarm 
 
 outputs:
-1) model parameters/losses checkpoints (saved filename ex: ./trained/STHarm_CMD)
+model parameters/losses checkpoints (saved filename ex: ./trained/rVTHarm_HLSD)
+
+2)python3 process_data_LSTM_4bar --dataset HLSD
+
+outputs:
+1) saves npy files for the parsed features (saved directory ex: ./LSTM/output/~) 
+2) saves train/val/test batches (saved directory ex: ./LSTM/exp/train/batch/~)
+3) saves h5py dataset for the train/val/test batches (saved filename ex: ./LSTM_train.h5)
+
+3)python3 trainer_SurpriseNet_4bar.py
+
+outputs:
+model parameters/losses checkpoints (saved filename ex: ./trained/SurpriseNet_raw_meian_HLSD)
 
 
 ## TEST MODEL 
